@@ -25,6 +25,8 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+
+	"github.com/vmihailenco/msgpack/v5"
 )
 
 // DivisionPrecision is the number of decimal places in the result when it
@@ -1788,6 +1790,10 @@ func (d Decimal) MarshalJSON() ([]byte, error) {
 		str = "\"" + d.String() + "\""
 	}
 	return []byte(str), nil
+}
+
+func (d Decimal) MarshalMsgpack() ([]byte, error) {
+	return msgpack.Marshal(d.String())
 }
 
 // UnmarshalBinary implements the encoding.BinaryUnmarshaler interface. As a string representation
